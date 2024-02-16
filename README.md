@@ -4,8 +4,15 @@ Disclaimer: This small program is not very versatile, it expects `mutt` to be co
 
 ## Installation
 
-The script expects `mutt` for sending out emails, plus several Python packages. In order to install, clone the repository, install the Python packages, make sure to put the `serienmail` script into a folder that is in your PATH, and make it executable. 
+The script expects `mutt` for sending out emails, plus the following Python packages: argparse, os, pandas, pathlib, shlex, subprocess, sys, yaml.
+
+In order to install, clone the repository, install the Python packages, make sure to put the `serienmail` script into a folder that is in your PATH, and make it executable. 
 
 ## Usage
 
 Run `serienmail --init` to write a plain configuration file in the working directory. Then define the variables given in the config file (see defaults in the config file comments). Write all participant information into a csv file with the columns: Name, Email, TN-Bestätigung (this is the filename). Then run the program again without the --init flag => Mails should be sent through the given mutt account. 
+
+## Todo
+
+- simplify installation with Python poetry
+- build web application for workshop management, including registration, or start using moodle or any other system ready to go :)
