@@ -1,5 +1,6 @@
-workshop_title: 
-signature:              # Signature for message body (should be a name;)
-mutt_account:         # path to mutt account that will be used for sending the mails
-csv_file:             # filename of csv table (default: teilnehmende.csv)
-filedir:              # path to pdf folder (default: teilnahmebestätigungen)
+workshop_title: Automatische Texterkennung mit OCR4all      
+signature: Claus-Michael Schlesinger             # Signature for message body (should be a name;)
+mutt_account: /home/cms/.mutt/account.hub        # path to mutt account that will be used for sending the mails
+csv_file: teilnehmende.csv            # filename of csv table (default: teilnehmende.csv)
+filedir: teilnahmebestätigungen             # path to pdf folder (default: teilnahmebestätigungen)
+

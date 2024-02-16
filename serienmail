@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding:utf8
 
-# a small script that reads a csv file and uses the columns Name, Adress and File to send a message to each Adress, using the Name for Hello Name in the message, and attach the file from the File column. the message is sent with mutt. this is pretty much idiosyncratic for my own system. in oder to use, variables would have to be defined externally through a config file.
+# a small script that reads a csv file and uses the columns Name, Adress and File to send a message to each Adress, using the Name for Hello Name in the message, and attach the file from the File column. the message is sent with mutt. this is pretty much idiosyncratic for my own system. in oder to use, variables need to be defined in a config file. Run with --init to write example config.yml to the working directory.
 import argparse
 import os
 import pandas as pd
@@ -56,6 +56,15 @@ else:
 with open(config_file, 'r') as f:
     config = yaml.safe_load(f)
 
+# check config file for variables
+missing_keys = []
+for key,var in config.items():
+    if not var:
+        missing_keys.append(key)
+if missing_keys != []:
+    print(f'Missing values in the configuration file: {missing_keys}. Please add the missing values and try again. Exiting.')
+    sys.exit()
+        
 # set variables
 basedir = p.Path().absolute()
 csv_file = basedir / config['csv_file']
@@ -63,8 +72,6 @@ filedir = basedir / config['filedir']
 workshop_title = config['workshop_title']
 mutt_account = config['mutt_account']
 signature = config['signature']
-print(basedir)
-print(filedir)
 
 # templates 
 message_subject = f'Workshop {workshop_title} -- Ihre Teilnahmebestätigung'
@@ -82,12 +89,12 @@ for index, row in df.iterrows():
     else:
         tn_name = row['Name']
         tn_file = filedir / row['TN-Bestätigung']
-        tn_address = row['Adresse']
+        tn_address = row['Email']
         # write message body to file
         with open('message.txt', 'w') as f:
             f.write(f'Sehr geehrte*r {tn_name},\n\nanbei finden Sie Ihre Teilnahmebestätigung für den Workshop {workshop_title}.\n\nMit freundlichem Gruß\n{signature} \n\n\nDiese Mail wurde automatisch erstellt. Auf Rückfragen antworten wir wieder persönlich.')
         # mutt command
-        mutt_command = f'mutt -e "source {mutt_account}" -s "{message_subject}" -a {tn_file} -- {tn_address} < message.txt'
+        mutt_command = f'mutt -e "source {mutt_account}" -s "{message_subject}" -a "{tn_file}" -- {tn_address} < message.txt'
 #        print(mutt_command)
 #        print(shlex.split(mutt_command, posix=True))
 #        subprocess.run(shlex.split(mutt_command), capture_output=True)
@@ -96,7 +103,3 @@ for index, row in df.iterrows():
         print(f'Mail to {tn_name} has been sent.')
 print('Done.')
 
-# ['mutt', '-e', 'source /home/cms/.mutt/account.hub', '-s', 'Workshop Automatische Texterkennung mit OCR4all -- Ihre Teilnahmebestätigung', '-a', '/home/cms/python/programme/serienmail/teilnahmebestätigungen/schlesinger2.pdf', '--', 'cms@dock.in-berlin.de', '<', 'message.txt']
-
-# working command:
-# mutt -e "source ~/.mutt/account.hub" -s "test" -f ~/.mutt/hub -a ~/tmp/test.txt -- claus-michael.schlesinger@hu-berlin.de < message.txt
