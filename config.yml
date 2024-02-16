@@ -1,7 +1,5 @@
-basedir:              # set basic working directory
-csv_file:             # path to csv table
-filedir:              # path to pdf folder
-workshop_title:       
+workshop_title: 
+signature:              # Signature for message body (should be a name;)
 mutt_account:         # path to mutt account that will be used for sending the mails
-signature:            # Signature for message body (should be a name;)
-
+csv_file:             # filename of csv table (default: teilnehmende.csv)
+filedir:              # path to pdf folder (default: teilnahmebestätigungen)
