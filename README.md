@@ -1,8 +1,10 @@
 This is a small script to automate sending emails to workshop participants with attachments (confirmation of participation).
 
+Disclaimer: This small program is not very versatile, it expects `mutt` to be configured for sending out mails. It has only been tested with a mutt configuration that makes it possible to send mail without any manual interaction, e.g. entering a password. 
+
 ## Installation
 
-The script expects `mutt` for sending out emails, plus several Python packages. In order to install, clone the repository, make sure to put the `serienmail` script into a folder that is in your PATH, and make it executable.
+The script expects `mutt` for sending out emails, plus several Python packages. In order to install, clone the repository, install the Python packages, make sure to put the `serienmail` script into a folder that is in your PATH, and make it executable. 
 
 ## Usage
 
